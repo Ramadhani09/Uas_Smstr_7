@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'theme.dart'; // Kept in lib/theme.dart
 import 'screens/splash_screen.dart';
 
-void main() {
+import 'data/user_data.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await UserData.init();
   runApp(const MyApp());
 }
 

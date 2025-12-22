@@ -18,6 +18,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    // Explicitly init user data again to ensure it's loaded, especially after hot restart
+    UserData.init().then((_) {
+      setState(() {}); // Rebuild to reflect registration status
+      print("LoginScreen: UserData initialized. Registered: ${UserData.isRegistered}, Email: ${UserData.email}");
+    });
+  }
+
+  @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
@@ -185,6 +195,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
+                            print("Login attempt. Input Email: ${_emailController.text}, Saved Email: ${UserData.email}");
+                            
                             if (!UserData.isRegistered) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(content: Text("Account not found. Please Register first.")),

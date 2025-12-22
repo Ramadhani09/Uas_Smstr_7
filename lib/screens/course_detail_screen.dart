@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import 'session_detail_screen.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   final String courseTitle;
@@ -35,31 +36,55 @@ class CourseDetailScreen extends StatelessWidget {
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
                   elevation: 1,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  child: ExpansionTile(
-                    leading: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Icon(Icons.folder, color: Colors.blue),
-                    ),
-                    title: Text("Pertemuan ${index + 1}"),
-                    subtitle: Text("Konsep Dasar ${index + 1}"),
-                    trailing: const Icon(Icons.check_circle, color: kAccentColor),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: const [
-                            Icon(Icons.description, color: Colors.grey, size: 20),
-                            SizedBox(width: 8),
-                            Text("Slide Presentasi.pdf"),
-                          ],
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SessionDetailScreen(
+                            sessionTitle: "Pertemuan ${index + 1}: Konsep Dasar ${index + 1}",
+                          ),
                         ),
+                      );
+                    },
+                    borderRadius: BorderRadius.circular(12), // Match card shape
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const Icon(Icons.folder, color: Colors.blue),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Pertemuan ${index + 1}",
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  "Konsep Dasar ${index + 1}",
+                                  style: const TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Icon(Icons.check_circle, color: kAccentColor),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 );
               },

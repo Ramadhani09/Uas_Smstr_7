@@ -204,7 +204,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_nameController.text.isEmpty || 
                                 _emailController.text.isEmpty || 
                                 _passwordController.text.isEmpty) {
@@ -214,11 +214,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 return;
                             }
 
-                            // SAVE DATA TO MEMORY
-                            UserData.name = _nameController.text;
-                            UserData.email = _emailController.text;
-                            UserData.password = _passwordController.text;
-                            UserData.isRegistered = true;
+                            // SAVE DATA PERSISTENTLY
+                            await UserData.saveUser(
+                              _nameController.text,
+                              _emailController.text,
+                              _passwordController.text,
+                            );
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text("Registration Successful! Please Login.")),
