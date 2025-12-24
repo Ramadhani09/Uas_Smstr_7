@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme.dart';
+import 'video_learning_screen.dart';
+import 'material_view_screen.dart';
 
 class SessionDetailScreen extends StatefulWidget {
   final String sessionTitle;
@@ -153,7 +155,25 @@ class _SessionDetailScreenState extends State<SessionDetailScreen>
             trailing: const Icon(Icons.check_circle, color: kAccentColor),
             contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
             onTap: () {
-              // Handle open item
+              if (item['type'] == 'video') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => VideoLearningScreen(
+                      videoTitle: "Video - User Interface Design For Beginner",
+                    ),
+                  ),
+                );
+              } else if (item['type'] == 'pdf' && item['title'] == 'Pengantar User Interface Design') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MaterialViewScreen(
+                      title: item['title'],
+                    ),
+                  ),
+                );
+              }
             },
           ),
         );

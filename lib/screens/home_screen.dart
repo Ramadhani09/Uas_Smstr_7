@@ -4,6 +4,10 @@ import '../widgets/course_card.dart';
 import '../data/user_data.dart';
 import 'profile_screen.dart';
 import 'course_detail_screen.dart';
+import 'announcement_detail_screen.dart';
+import 'announcement_list_screen.dart';
+import 'package:flutter/foundation.dart'; // Add this for kIsWeb
+import 'dart:io';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -168,7 +172,14 @@ class HomeScreen extends StatelessWidget {
                               fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AnnouncementListScreen(),
+                              ),
+                            );
+                          },
                           child: const Text(
                             "Lihat Semua",
                             style: TextStyle(color: Colors.blue, fontSize: 12),
@@ -177,40 +188,53 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Container(
-                      width: double.infinity,
-                      height: 180,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.grey.shade200),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Education/Collaboration theme
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(
-                              color: Colors.blue.shade50,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.announcement,
-                                        color: Colors.blue.shade300, size: 40),
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      "Banner Pengumuman",
-                                      style: TextStyle(
-                                          color: Colors.blue.shade700,
-                                          fontWeight: FontWeight.bold),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AnnouncementDetailScreen(),
+                            ),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          height: 180,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.grey.shade200),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.asset(
+                              'assets/images/maintenance_banner.png',
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  color: Colors.blue.shade50,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.announcement,
+                                            color: Colors.blue.shade300, size: 40),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          "Maintenance LMS",
+                                          style: TextStyle(
+                                              color: Colors.blue.shade700,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ),
                       ),
                     ),

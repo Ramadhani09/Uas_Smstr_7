@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../theme.dart';
 import 'session_detail_screen.dart';
 import 'quiz_detail_screen.dart';
+import 'assignment_detail_screen.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   final String courseTitle;
@@ -260,6 +261,13 @@ class CourseDetailScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (context) => QuizDetailScreen(quizTitle: title),
+              ),
+            );
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AssignmentDetailScreen(assignmentTitle: title),
               ),
             );
           }
