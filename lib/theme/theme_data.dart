@@ -9,9 +9,7 @@ final ThemeData celoeTheme = ThemeData(
     style: ElevatedButton.styleFrom(
       backgroundColor: const Color(0xFF800000), // Maroon
       foregroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
   ),
   colorScheme: ColorScheme.fromSwatch().copyWith(

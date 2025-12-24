@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'profile_screen.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -6,28 +7,55 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text("Notifikasi"),
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 1,
+        elevation: 0,
+        titleSpacing: 20,
+        title: const Text(
+          "Notifikasi",
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person, color: Colors.black),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+            },
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1.0),
+          child: Container(
+            color: Colors.grey[200],
+            height: 1.0,
+          ),
+        ),
       ),
       body: ListView.separated(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: 5,
         separatorBuilder: (context, index) => const Divider(),
         itemBuilder: (context, index) {
           return ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.grey[200],
-              child: Icon(
-                index % 2 == 0 ? Icons.assignment : Icons.quiz, 
-                color: Colors.black54,
-              ),
+            leading: const Icon(
+              Icons.assignment_outlined,
+              color: Colors.black87,
             ),
-            title: Text("Anda telah mengirimkan Tugas ${index + 1}"),
+            title: const Text(
+              "Anda telah mengirimkan pengajuan tugas untuk Pengumpulan Laporan Akhir Assessment 3 (Tugas Besar)",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+            ),
             subtitle: Text(
-              "${index + 1} Hari Yang Lalu",
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
+              "3 Hari 9 Jam Yang Lalu",
+              style: TextStyle(fontSize: 12, color: Colors.grey[600]),
             ),
           );
         },

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'theme.dart';
-import 'login_screen.dart';
+import 'screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -31,11 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             // Logo Placeholder (Icon)
             // Using Icon since 'assets/images/logo.png' might not exist yet
-            const Icon(
-              Icons.school,
-              size: 100,
-              color: Colors.white,
-            ),
+            const Icon(Icons.school, size: 100, color: Colors.white),
             const SizedBox(height: 20),
             Text(
               "Learning Management System",

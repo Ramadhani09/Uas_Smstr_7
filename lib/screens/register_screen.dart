@@ -12,7 +12,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordVisible = false;
-  
+
   // Controllers
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -29,11 +29,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50], //... existing implementation ...
+      backgroundColor: Colors.grey[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // ... existing header ...
             Stack(
               clipBehavior: Clip.none,
               children: [
@@ -60,7 +59,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             alignment: Alignment.centerLeft,
                             child: IconButton(
                               onPressed: () => Navigator.pop(context),
-                              icon: const Icon(Icons.arrow_back, color: Colors.white),
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                           // Logo
@@ -70,7 +72,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               color: Colors.white.withOpacity(0.1),
                               shape: BoxShape.circle,
                               border: Border.all(
-                                  color: Colors.white.withOpacity(0.5), width: 1.5),
+                                color: Colors.white.withOpacity(0.5),
+                                width: 1.5,
+                              ),
                             ),
                             child: const Icon(
                               Icons.menu_book_rounded,
@@ -95,10 +99,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       const Text(
                         "Register to get started",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                     ],
                   ),
@@ -196,7 +197,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 30),
 
                       // Register Button
@@ -205,13 +206,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (_nameController.text.isEmpty || 
-                                _emailController.text.isEmpty || 
+                            if (_nameController.text.isEmpty ||
+                                _emailController.text.isEmpty ||
                                 _passwordController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Please fill all fields")),
-                                );
-                                return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Please fill all fields"),
+                                ),
+                              );
+                              return;
+                            }
+
+                            bool userExists = await UserData.userExists(
+                              _emailController.text,
+                            );
+
+                            if (userExists) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Email already registered. Please use a different email.",
+                                  ),
+                                ),
+                              );
+                              return;
                             }
 
                             // SAVE DATA PERSISTENTLY
@@ -222,7 +240,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             );
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text("Registration Successful! Please Login.")),
+                              const SnackBar(
+                                content: Text(
+                                  "Registration Successful! Please Login.",
+                                ),
+                              ),
                             );
 
                             Navigator.pop(context); // Go back to login
@@ -245,7 +267,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -254,16 +276,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             "Already have an account? ",
                             style: TextStyle(color: Colors.grey, fontSize: 13),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pop(context); // Go back to Login
-                            },
-                            child: const Text(
-                              "Login",
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context); // Go back to Login
+                              },
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
                               ),
                             ),
                           ),

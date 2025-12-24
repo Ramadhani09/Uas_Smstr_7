@@ -3,14 +3,22 @@ import '../theme.dart';
 
 class SessionDetailScreen extends StatefulWidget {
   final String sessionTitle;
+  final String description;
+  final List<Map<String, dynamic>>? materials;
 
-  const SessionDetailScreen({super.key, required this.sessionTitle});
+  const SessionDetailScreen({
+    super.key,
+    required this.sessionTitle,
+    this.description = "Pada pertemuan ini kita akan membahas materi terkait topik yang telah ditentukan untuk memperdalam pemahaman mahasiswa.",
+    this.materials,
+  });
 
   @override
   State<SessionDetailScreen> createState() => _SessionDetailScreenState();
 }
 
-class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTickerProviderStateMixin {
+class _SessionDetailScreenState extends State<SessionDetailScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -55,7 +63,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      "Pengantar User Interface Design", // Hardcoded based on image, or pass as param
+                      widget.sessionTitle,
                       style: kHeaderStyle.copyWith(fontSize: 22),
                       textAlign: TextAlign.center,
                     ),
@@ -69,7 +77,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      "Antarmuka yang dibangun harus memperhatikan prinsip-prinsip desain yang ada. Hal ini diharapkan agar antarmuka yang dibangun bukan hanya menarik secara visual tetapi dengan memperhatikan kaidah-kaidah prinsip desain diharapkan akan mendukung pengguna dalam menggunakan produk secara baik. Pelajaran mengenai prinsip UID ini sudah pernah diajarkan dalam mata kuliah Implementasi Desain Antarmuka Pengguna tetap pada matakuliah ini akan direview kembali sehingga dapat menjadi bekal saat memasukki materi mengenai User Experience",
+                      widget.description,
                       style: kBodyStyle.copyWith(color: Colors.grey[800], height: 1.5),
                     ),
                     const SizedBox(height: 20),
@@ -107,17 +115,17 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
   }
 
   Widget _buildMateriList() {
-    final List<Map<String, dynamic>> items = [
+    final List<Map<String, dynamic>> defaultItems = [
       {"title": "Zoom Meeting Syncronous", "icon": Icons.link, "type": "link"},
-      {"title": "Pengantar User Interface Design", "icon": Icons.description, "type": "pdf"},
-      {"title": "Empat Teori Dasar Antarmuka Pengguna", "icon": Icons.description, "type": "pdf"},
-      {"title": "Empat Teori Dasar Antarmuka Pengguna", "icon": Icons.description, "type": "pdf"},
-      {"title": "User Interface Design for Beginner", "icon": Icons.video_library, "type": "video"},
-      {"title": "20 Prinsip Desain", "icon": Icons.link, "type": "link"},
-      {"title": "Best Practice UI Design", "icon": Icons.link, "type": "link"},
+      {"title": widget.sessionTitle, "icon": Icons.description, "type": "pdf"},
+      {"title": "Materi Tambahan 1", "icon": Icons.description, "type": "pdf"},
+      {"title": "Video Pembelajaran", "icon": Icons.video_library, "type": "video"},
     ];
 
+    final List<Map<String, dynamic>> items = widget.materials ?? defaultItems;
+
     return ListView.builder(
+      primary: false, // Penting untuk NestedScrollView
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
       itemBuilder: (context, index) {
@@ -155,14 +163,20 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
 
   Widget _buildTugasList() {
     // Placeholder similar to materi
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.assignment_outlined, size: 64, color: Colors.grey),
-          SizedBox(height: 16),
-          Text("Belum ada tugas atau kuis"),
-        ],
+    return SingleChildScrollView(
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: const [
+              Icon(Icons.assignment_outlined, size: 64, color: Colors.grey),
+              SizedBox(height: 16),
+              Text("Belum ada tugas atau kuis"),
+            ],
+          ),
+        ),
       ),
     );
   }

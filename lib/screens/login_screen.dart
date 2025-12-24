@@ -13,7 +13,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
-  
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -23,7 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
     // Explicitly init user data again to ensure it's loaded, especially after hot restart
     UserData.init().then((_) {
       setState(() {}); // Rebuild to reflect registration status
-      print("LoginScreen: UserData initialized. Registered: ${UserData.isRegistered}, Email: ${UserData.email}");
+      print(
+        "LoginScreen: UserData initialized. Logged In: ${UserData.isLoggedIn}, Email: ${UserData.email}",
+      );
     });
   }
 
@@ -46,9 +48,15 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 // 1. Blue Header Background
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.40, // Increased height to prevent overflow
+                  height:
+                      MediaQuery.of(context).size.height *
+                      0.40, // Increased height to prevent overflow
                   width: double.infinity,
-                  padding: const EdgeInsets.only(top: 40, left: 24, right: 24), // Reduced top padding
+                  padding: const EdgeInsets.only(
+                    top: 30, // Reduced top padding to pull content up
+                    left: 24,
+                    right: 24,
+                  ), // Reduced top padding
                   decoration: const BoxDecoration(
                     color: kPrimaryColor, // Dark Blue
                     borderRadius: BorderRadius.only(
@@ -66,7 +74,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.white.withOpacity(0.1),
                           shape: BoxShape.circle,
                           border: Border.all(
-                              color: Colors.white.withOpacity(0.5), width: 1.5),
+                            color: Colors.white.withOpacity(0.5),
+                            width: 1.5,
+                          ),
                         ),
                         child: const Icon(
                           Icons.menu_book_rounded,
@@ -89,10 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text(
                         "Enter your email and password to log in",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 14,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
                     ],
                   ),
@@ -101,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 // 2. Floating Form Card (TIMBUL)
                 Container(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.28,
+                    top: MediaQuery.of(context).size.height * 0.32, // Moved down to 0.32 to reveal text
                     left: 30, // Adjusted width based on reference
                     right: 30, // Adjusted width based on reference
                     bottom: 30,
@@ -171,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      
+
                       Align(
                         alignment: Alignment.centerRight,
                         child: TextButton(
@@ -186,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
 
                       // Log In Button
@@ -194,27 +201,36 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {
-                            print("Login attempt. Input Email: ${_emailController.text}, Saved Email: ${UserData.email}");
-                            
-                            if (!UserData.isRegistered) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Account not found. Please Register first.")),
-                                );
-                                return;
+                          onPressed: () async {
+                            if (_emailController.text.isEmpty ||
+                                _passwordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Please fill all fields"),
+                                ),
+                              );
+                              return;
                             }
-                            
-                            if (_emailController.text == UserData.email && 
-                                _passwordController.text == UserData.password) {
-                                // Navigate to MainScreen
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const MainScreen()),
-                                );
+
+                            bool loginSuccess = await UserData.login(
+                              _emailController.text,
+                              _passwordController.text,
+                            );
+
+                            if (loginSuccess) {
+                              // Navigate to MainScreen
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const MainScreen(),
+                                ),
+                              );
                             } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text("Invalid Email or Password")),
-                                );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text("Invalid Email or Password"),
+                                ),
+                              );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -235,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                       ),
-                      
+
                       const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
