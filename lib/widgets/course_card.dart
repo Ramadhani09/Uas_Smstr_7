@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../theme/theme.dart';
 
 class CourseCard extends StatelessWidget {
   final String title;
   final String lecturer;
   final double progress;
   final Color baseColor;
+  final String? imageUrl;
   final VoidCallback? onTap;
 
   const CourseCard({
@@ -14,6 +15,7 @@ class CourseCard extends StatelessWidget {
     required this.lecturer,
     required this.progress,
     required this.baseColor,
+    this.imageUrl,
     this.onTap,
   });
 
@@ -34,7 +36,7 @@ class CourseCard extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Placeholder for Image/Icon like in the design
+              // Image Container
               Container(
                 width: 80,
                 height: 80,
@@ -42,15 +44,23 @@ class CourseCard extends StatelessWidget {
                   color: baseColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Center(
-                  child: Text(
-                    title.substring(0, 2).toUpperCase(),
-                    style: TextStyle(
-                      color: baseColor,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: imageUrl != null
+                      ? (imageUrl!.startsWith('http')
+                          ? Image.network(
+                              imageUrl!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  _buildFallback(),
+                            )
+                          : Image.asset(
+                              imageUrl!,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  _buildFallback(),
+                            ))
+                      : _buildFallback(),
                 ),
               ),
               const SizedBox(width: 12),
@@ -93,6 +103,18 @@ class CourseCard extends StatelessWidget {
         ),
       ),
     );
+  }
 
+  Widget _buildFallback() {
+    return Center(
+      child: Text(
+        title.length >= 2 ? title.substring(0, 2).toUpperCase() : title.toUpperCase(),
+        style: TextStyle(
+          color: baseColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }

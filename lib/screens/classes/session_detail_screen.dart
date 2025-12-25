@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../../theme/theme.dart';
 import 'video_learning_screen.dart';
 import 'material_view_screen.dart';
 

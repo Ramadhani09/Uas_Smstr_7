@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../../theme/theme.dart';
 
 class AssignmentDetailScreen extends StatelessWidget {
   final String assignmentTitle;
@@ -214,7 +214,7 @@ class UploadAssignmentSheet extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Padding(
+            child: SingleChildScrollView(
               padding: const EdgeInsets.all(25.0),
               child: Column(
                 children: [

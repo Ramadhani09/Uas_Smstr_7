@@ -1,36 +1,26 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
-import 'main_screen.dart';
-import 'register_screen.dart';
-import '../data/user_data.dart';
+import '../../theme/theme.dart';
+import 'login_screen.dart';
+import '../../data/user_data.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   bool _isPasswordVisible = false;
 
+  // Controllers
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-    // Explicitly init user data again to ensure it's loaded, especially after hot restart
-    UserData.init().then((_) {
-      setState(() {}); // Rebuild to reflect registration status
-      print(
-        "LoginScreen: UserData initialized. Logged In: ${UserData.isLoggedIn}, Email: ${UserData.email}",
-      );
-    });
-  }
-
-  @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -39,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[50], // Light grey background for contrast
+      backgroundColor: Colors.grey[50],
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -48,15 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 // 1. Blue Header Background
                 Container(
-                  height:
-                      MediaQuery.of(context).size.height *
-                      0.40, // Increased height to prevent overflow
+                  height: MediaQuery.of(context).size.height * 0.40,
                   width: double.infinity,
-                  padding: const EdgeInsets.only(
-                    top: 30, // Reduced top padding to pull content up
-                    left: 24,
-                    right: 24,
-                  ), // Reduced top padding
+                  padding: const EdgeInsets.only(top: 40, left: 24, right: 24),
                   decoration: const BoxDecoration(
                     color: kPrimaryColor, // Dark Blue
                     borderRadius: BorderRadius.only(
@@ -65,39 +49,55 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center, // Centered
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // Logo
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1.5,
+                      // Back Button & Logo Row
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: IconButton(
+                              onPressed: () => Navigator.pop(context),
+                              icon: const Icon(
+                                Icons.arrow_back,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                        child: const Icon(
-                          Icons.menu_book_rounded,
-                          size: 40,
-                          color: Colors.white,
-                        ),
+                          // Logo
+                          Container(
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.1),
+                              shape: BoxShape.circle,
+                              border: Border.all(
+                                color: Colors.white.withOpacity(0.5),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: const Icon(
+                              Icons.menu_book_rounded,
+                              size: 40,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 16),
                       const Text(
-                        "Sign in to your Account",
+                        "Create Account",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 24, // Reduced from 32
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
                         ),
                       ),
                       const SizedBox(height: 8),
                       const Text(
-                        "Enter your email and password to log in",
+                        "Register to get started",
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.white70, fontSize: 14),
                       ),
@@ -108,9 +108,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 // 2. Floating Form Card (TIMBUL)
                 Container(
                   margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.32, // Moved down to 0.32 to reveal text
-                    left: 30, // Adjusted width based on reference
-                    right: 30, // Adjusted width based on reference
+                    top: MediaQuery.of(context).size.height * 0.28,
+                    left: 30,
+                    right: 30,
                     bottom: 30,
                   ),
                   padding: const EdgeInsets.all(30),
@@ -121,13 +121,32 @@ class _LoginScreenState extends State<LoginScreen> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.1),
                         blurRadius: 20,
-                        offset: const Offset(0, 10), // Shadow position
+                        offset: const Offset(0, 10),
                         spreadRadius: 2,
                       ),
                     ],
                   ),
                   child: Column(
                     children: [
+                      // Nama Field
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: "Nama", // Name
+                          filled: true,
+                          fillColor: Colors.grey[50],
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 16,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
                       // Email Field
                       TextField(
                         controller: _emailController,
@@ -179,30 +198,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
 
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            "Forgot Password?",
-                            style: TextStyle(
-                              color: kPrimaryColor,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
+                      const SizedBox(height: 30),
 
-                      const SizedBox(height: 20),
-
-                      // Log In Button
+                      // Register Button
                       SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () async {
-                            if (_emailController.text.isEmpty ||
+                            if (_nameController.text.isEmpty ||
+                                _emailController.text.isEmpty ||
                                 _passwordController.text.isEmpty) {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -212,26 +217,37 @@ class _LoginScreenState extends State<LoginScreen> {
                               return;
                             }
 
-                            bool loginSuccess = await UserData.login(
+                            bool userExists = await UserData.userExists(
+                              _emailController.text,
+                            );
+
+                            if (userExists) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                    "Email already registered. Please use a different email.",
+                                  ),
+                                ),
+                              );
+                              return;
+                            }
+
+                            // SAVE DATA PERSISTENTLY
+                            await UserData.saveUser(
+                              _nameController.text,
                               _emailController.text,
                               _passwordController.text,
                             );
 
-                            if (loginSuccess) {
-                              // Navigate to MainScreen
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const MainScreen(),
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Registration Successful! Please Login.",
                                 ),
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text("Invalid Email or Password"),
-                                ),
-                              );
-                            }
+                              ),
+                            );
+
+                            Navigator.pop(context); // Go back to login
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor,
@@ -242,7 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: const Text(
-                            "Log In",
+                            "Register",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
@@ -257,24 +273,22 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Don't have an account? ",
+                            "Already have an account? ",
                             style: TextStyle(color: Colors.grey, fontSize: 13),
                           ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen(),
+                          MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context); // Go back to Login
+                              },
+                              child: const Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
                                 ),
-                              );
-                            },
-                            child: const Text(
-                              "Register",
-                              style: TextStyle(
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13,
                               ),
                             ),
                           ),

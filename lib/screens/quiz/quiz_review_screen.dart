@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../../theme/theme.dart';
 
 class ReviewQuizScreen extends StatelessWidget {
   final List<int?> answers;
@@ -15,7 +15,7 @@ class ReviewQuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color headerColor = kPrimaryColor; // Updated to Blue theme
+    const Color headerColor = kPrimaryColor;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -32,21 +32,28 @@ class ReviewQuizScreen extends StatelessWidget {
             // Summary Card
             Container(
               margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Colors.grey[50], 
-                borderRadius: BorderRadius.circular(15),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
               ),
               child: Column(
                 children: [
                   _buildSummaryRow("Di Mulai Pada", "Kamis 25 Februari 2021 10:25"),
-                  const SizedBox(height: 8),
+                  const Divider(height: 16, color: Colors.transparent),
                   _buildSummaryRow("Status", "Selesai"),
-                  const SizedBox(height: 8),
+                  const Divider(height: 16, color: Colors.transparent),
                   _buildSummaryRow("Selesai Pada", "Kamis 25 Februari 2021 10:40"),
-                  const SizedBox(height: 8),
+                  const Divider(height: 16, color: Colors.transparent),
                   _buildSummaryRow("Waktu Penyelesaian", "13 Menit 22 Detik"),
-                  const SizedBox(height: 8),
+                  const Divider(height: 16, color: Colors.transparent),
                   _buildSummaryRow("Nilai", "0 / 100"),
                 ],
               ),
@@ -64,58 +71,86 @@ class ReviewQuizScreen extends StatelessWidget {
                     : "Belum dijawab";
 
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            "Pertanyaan ${index + 1}",
-                            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                          SizedBox(
+                            width: 90,
+                            child: Text(
+                              "Pertanyaan ${index + 1}",
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600, 
+                                fontSize: 13,
+                                color: Colors.black87
+                              ),
+                            ),
                           ),
-                          const SizedBox(width: 15),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                               decoration: BoxDecoration(
-                                color: Colors.grey[300],
-                                borderRadius: BorderRadius.circular(4),
+                                color: const Color(0xFFE0E0E0), // Grey from image
+                                borderRadius: BorderRadius.circular(2),
                               ),
                               child: Text(
                                 questions[index]['question'],
-                                style: const TextStyle(fontSize: 12),
+                                style: const TextStyle(fontSize: 12, color: Colors.black),
                               ),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 10),
+                      const SizedBox(height: 12),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Jawaban Tersimpan", style: TextStyle(fontSize: 13)),
-                              const SizedBox(height: 4),
-                              Text(
-                                answerText,
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
-                              ),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Jawaban Tersimpan", 
+                                  style: TextStyle(fontSize: 12, color: Colors.black)
+                                ),
+                                const SizedBox(height: 4),
+                                Text(
+                                  answerText,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold, 
+                                    fontSize: 13,
+                                    color: Colors.black87
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           MouseRegion(
                             cursor: SystemMouseCursors.click,
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.pop(context, index); // Go back to specific question
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context, index);
                               },
-                              child: const Text("Lihat Soal", style: TextStyle(color: Colors.blue, fontSize: 12, fontWeight: FontWeight.bold)),
+                              child: const Text(
+                                "Lihat Soal", 
+                                style: TextStyle(
+                                  color: Colors.blue, 
+                                  fontSize: 12, 
+                                  fontWeight: FontWeight.bold
+                                )
+                              ),
                             ),
                           ),
                         ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(top: 15),
+                        child: Divider(height: 1, thickness: 0.5),
                       ),
                     ],
                   ),
@@ -130,14 +165,16 @@ class ReviewQuizScreen extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: Center(
                 child: SizedBox(
-                  width: 150,
+                  width: 200,
+                  height: 48,
                   child: ElevatedButton(
                     onPressed: () {
                       _showSuccessDialog(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF39F11F), // Original Green color
+                      backgroundColor: kPrimaryColor, 
                       foregroundColor: Colors.white,
+                      elevation: 0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                     child: const Text("Kirim Jawaban", style: TextStyle(fontWeight: FontWeight.bold)),
@@ -154,14 +191,29 @@ class ReviewQuizScreen extends StatelessWidget {
 
   Widget _buildSummaryRow(String label, String value) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 2,
-          child: Text(label, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500)),
+          child: Text(
+            label, 
+            style: const TextStyle(
+              fontSize: 12, 
+              fontWeight: FontWeight.bold,
+              color: Colors.black87
+            )
+          ),
         ),
         Expanded(
           flex: 3,
-          child: Text(value, style: const TextStyle(fontSize: 12)),
+          child: Text(
+            value, 
+            textAlign: TextAlign.right,
+            style: const TextStyle(
+              fontSize: 12,
+              color: Colors.black54
+            )
+          ),
         ),
       ],
     );

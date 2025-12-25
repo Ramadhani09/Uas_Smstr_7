@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../../theme/theme.dart';
 import 'session_detail_screen.dart';
-import 'quiz_detail_screen.dart';
-import 'assignment_detail_screen.dart';
+import '../quiz/quiz_detail_screen.dart';
+import '../assignment/assignment_detail_screen.dart';
 
 class CourseDetailScreen extends StatelessWidget {
   final String courseTitle;

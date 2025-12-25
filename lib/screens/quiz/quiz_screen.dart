@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import '../theme.dart';
+import '../../theme/theme.dart';
 import 'quiz_review_screen.dart';
 
 class QuizScreen extends StatefulWidget {

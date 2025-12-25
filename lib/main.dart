@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'theme.dart'; // Kept in lib/theme.dart
-import 'screens/splash_screen.dart';
+import 'theme/theme.dart'; // Updated path
+import 'screens/splash/splash_screen.dart';
 
 import 'data/user_data.dart';
 

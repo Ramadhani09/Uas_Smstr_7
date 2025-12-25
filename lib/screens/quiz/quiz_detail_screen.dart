@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+import '../../theme/theme.dart';
 import 'quiz_screen.dart';
 
 class QuizDetailScreen extends StatelessWidget {
@@ -27,45 +27,54 @@ class QuizDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Instructions Section
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai pertama komponen kuis.",
-                    style: TextStyle(fontSize: 14, height: 1.5),
+            // Instructions Section - Centered and Responsive
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    children: [
+                      const Text(
+                        "Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai pertama komponen kuis. Jangan lupa klik tombol Submit Answer setelah menjawab seluruh pertanyaan.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14, height: 1.5),
+                      ),
+                      const SizedBox(height: 16),
+                      const Text(
+                        "Kerjakan sebelum hari Jum'at, 26 Februari 2021 jam 23:59 WIB.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
+                    ],
                   ),
-                  const Text(
-                    "Jangan lupa klik tombol Submit Answer setelah menjawab seluruh pertanyaan.",
-                    style: TextStyle(fontSize: 14, height: 1.5),
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    "Kerjakan sebelum hari Jum'at, 26 Februari 2021 jam 23:59 WIB.",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-                  ),
-                ],
+                ),
               ),
             ),
 
-            // Info Card
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                children: [
-                  _buildInfoRow("Kuis Akan di tutup pada Jumat, 26 Februari 2021, 11:59 PM"),
-                  const SizedBox(height: 12),
-                  _buildInfoRow("Batas Waktu: 15 menit"),
-                  const SizedBox(height: 12),
-                  _buildInfoRow("Metode Penilaian: Nilai Tertinggi"),
-                ],
+            // Info Card - Centered and Responsive
+            Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: const EdgeInsets.all(20),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    children: [
+                      _buildInfoRow(
+                          "Kuis Akan di tutup pada Jumat, 26 Februari 2021, 11:59 PM"),
+                      const SizedBox(height: 12),
+                      _buildInfoRow("Batas Waktu: 15 menit"),
+                      const SizedBox(height: 12),
+                      _buildInfoRow("Metode Penilaian: Nilai Tertinggi"),
+                    ],
+                  ),
+                ),
               ),
             ),
 
@@ -85,11 +94,30 @@ class QuizDetailScreen extends StatelessWidget {
             Container(
               color: kPrimaryColor.withOpacity(0.8),
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Row(
-                children: const [
-                  Expanded(flex: 3, child: Text("Status", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
-                  Expanded(flex: 2, child: Text("Nilai / 100.00", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13))),
-                  Expanded(flex: 2, child: Text("Tinjau Kembali", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13))),
+              child: const Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Text("Status",
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text("Nilai / 100.00",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text("Tinjau Kembali",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13)),
+                  ),
                 ],
               ),
             ),
@@ -107,8 +135,11 @@ class QuizDetailScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Selesai", style: TextStyle(fontWeight: FontWeight.bold)),
-                        Text("Dikirim Pada Kamis, 25 Februari 2021, 10:40", style: TextStyle(color: Colors.grey[600], fontSize: 11)),
+                        const Text("Selesai",
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text("Dikirim Pada Kamis, 25 Februari 2021, 10:40",
+                            style:
+                                TextStyle(color: Colors.grey[600], fontSize: 11)),
                       ],
                     ),
                   ),
@@ -121,7 +152,9 @@ class QuizDetailScreen extends StatelessWidget {
                         onTap: () {
                           // Review logic
                         },
-                        child: const Text("Lihat", style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold)),
+                        child: const Text("Lihat",
+                            style: TextStyle(
+                                color: Colors.blue, fontWeight: FontWeight.bold)),
                       ),
                     ),
                   ),
@@ -130,10 +163,10 @@ class QuizDetailScreen extends StatelessWidget {
             ),
 
             const SizedBox(height: 20),
-            Center(
+            const Center(
               child: Text(
-                "Nilai Akhir Anda Unutuk Kuis Ini Adalah 85.0 / 100.00",
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                "Nilai Akhir Anda Untuk Kuis Ini Adalah 85.0 / 100.00",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               ),
             ),
 
@@ -150,7 +183,9 @@ class QuizDetailScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => QuizScreen(quizTitle: quizTitle)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  QuizScreen(quizTitle: quizTitle)),
                         );
                       },
                       style: ElevatedButton.styleFrom(

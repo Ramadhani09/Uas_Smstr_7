@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/course_card.dart';
+import '../../widgets/course_card.dart';
+import '../../theme/theme.dart';
 import 'course_detail_screen.dart';
-import 'profile_screen.dart';
+import '../profile/profile_screen.dart';
 
 
 class MyClassesScreen extends StatelessWidget {
@@ -12,43 +13,50 @@ class MyClassesScreen extends StatelessWidget {
       "title": "DESAIN ANTARMUKA & PENGALAMAN PENGGUNA",
       "lecturer": "Dr. Ady Purnalink, M.Kom",
       "progress": 0.85,
-      "color": Colors.orange
+      "color": Colors.orange,
+      "image": "assets/images/ui_ux.jpg"
     },
     {
       "title": "KEWARGANEGARAAN",
       "lecturer": "Drs. Bambang Budiono, M.Pd",
       "progress": 0.55,
-      "color": Colors.red
+      "color": Colors.red,
+      "image": "assets/images/kewarganegaraan.png"
     },
     {
       "title": "SISTEM OPERASI",
       "lecturer": "Agus Setiawan, S.T., M.Cs",
       "progress": 0.80,
-      "color": Colors.grey
+      "color": Colors.grey,
+      "image": "assets/images/sistem_operasi.jpg"
     },
     {
       "title": "PEMROGRAMAN PERANGKAT BERGERAK",
       "lecturer": "Ahmad Mujahidin, S.Kom., M.T",
       "progress": 0.80,
-      "color": Colors.cyan
+      "color": Colors.cyan,
+      "image": "assets/images/mobile_dev.png"
     },
     {
       "title": "BAHASA INGGRIS: BUSINESS AND SCIENTIFIC",
       "lecturer": "Ari Santoso, S.S., M.Hum",
       "progress": 0.80,
-      "color": Colors.blueGrey
+      "color": Colors.blueGrey,
+      "image": "assets/images/english.jpg"
     },
     {
       "title": "PEMROGRAMAN MULTIMEDIA INTERAKTIF",
       "lecturer": "Taufik Prayitno, M.T",
       "progress": 0.80,
-      "color": Colors.blue
+      "color": Colors.blue,
+      "image": "assets/images/multimedia.png"
     },
     {
       "title": "OLAH RAGA",
       "lecturer": "Eko Yulianto, S.Pd., M.Or",
       "progress": 0.80,
-      "color": Colors.indigo
+      "color": Colors.indigo,
+      "image": "assets/images/olahraga.jpg"
     },
   ];
 
@@ -57,20 +65,21 @@ class MyClassesScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: kPrimaryColor,
         elevation: 0,
         titleSpacing: 20,
+        iconTheme: const IconThemeData(color: Colors.white),
         title: const Text(
           "Kelas Saya",
           style: TextStyle(
-            color: Colors.black,
+            color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: false,
         actions: [
           IconButton(
-            icon: const Icon(Icons.person, color: Colors.black),
+            icon: const Icon(Icons.person, color: Colors.white),
             onPressed: () {
               Navigator.push(
                 context,
@@ -97,6 +106,7 @@ class MyClassesScreen extends StatelessWidget {
             lecturer: course['lecturer'],
             progress: course['progress'],
             baseColor: course['color'],
+            imageUrl: course['image'],
             onTap: () {
               Navigator.push(
                 context,

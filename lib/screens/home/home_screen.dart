@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
-import '../widgets/course_card.dart';
-import '../data/user_data.dart';
-import 'profile_screen.dart';
-import 'course_detail_screen.dart';
+import '../../theme/theme.dart';
+import '../../widgets/course_card.dart';
+import '../../data/user_data.dart';
+import '../profile/profile_screen.dart';
+import '../classes/course_detail_screen.dart';
 import 'announcement_detail_screen.dart';
 import 'announcement_list_screen.dart';
 import 'package:flutter/foundation.dart'; // Add this for kIsWeb
@@ -263,6 +263,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Dr. Ady Purnalink, M.Kom",
                       progress: 0.85,
                       baseColor: Colors.orange,
+                      imageUrl: "assets/images/ui_ux.jpg",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -279,6 +280,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Drs. Bambang Budiono, M.Pd",
                       progress: 0.55,
                       baseColor: Colors.red,
+                      imageUrl: "assets/images/kewarganegaraan.png",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -294,6 +296,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Agus Setiawan, S.T., M.Cs",
                       progress: 0.80,
                       baseColor: Colors.grey,
+                      imageUrl: "assets/images/sistem_operasi.jpg",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -309,6 +312,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Ahmad Mujahidin, S.Kom., M.T",
                       progress: 0.80,
                       baseColor: Colors.cyan,
+                      imageUrl: "assets/images/mobile_dev.png",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -324,6 +328,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Ari Santoso, S.S., M.Hum",
                       progress: 0.80,
                       baseColor: Colors.blueGrey,
+                      imageUrl: "assets/images/english.jpg",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -339,6 +344,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Taufik Prayitno, M.T",
                       progress: 0.80,
                       baseColor: Colors.blue,
+                      imageUrl: "assets/images/multimedia.png",
                       onTap: () {
                         Navigator.push(
                           context,
@@ -354,6 +360,7 @@ class HomeScreen extends StatelessWidget {
                       lecturer: "Eko Yulianto, S.Pd., M.Or",
                       progress: 0.80,
                       baseColor: Colors.indigo,
+                      imageUrl: "assets/images/olahraga.jpg",
                       onTap: () {
                         Navigator.push(
                           context,
